@@ -1,5 +1,3 @@
-Prompt
-
 create a new blog application
 
 Requirements:
