@@ -1,0 +1,43 @@
+<%= form_with(model: post, class: "contents", data: { controller: "form", action: "turbo:submit-end->form#reset" }) do |form| %>
+  <% if post.errors.any? %>
+    <div style="background-color: #ffebee; border-left: 4px solid #ef5350; padding: 16px; margin-bottom: 20px;">
+      <h2 style="font-weight: bold; margin-bottom: 8px;"><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul style="list-style-type: disc; margin-left: 20px;">
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :title, style: "display: block; font-weight: bold; margin-bottom: 8px;" %>
+    <%= form.text_field :title, 
+        style: "width: 100%; padding: 8px; border: 1px solid #ddd; box-sizing: border-box; font-size: 16px;#{post.errors[:title].any? ? 'border-color: #ef5350;' : ''}", 
+        placeholder: "Title" %>
+    <% if post.errors[:title].any? %>
+      <p style="color: #ef5350; font-size: 14px; margin-top: 4px;"><%= post.errors[:title].first %></p>
+    <% end %>
+  </div>
+
+  <div style="margin-bottom: 24px;">
+    <%= form.label :content, style: "display: block; font-weight: bold; margin-bottom: 8px;" %>
+    <%= form.text_area :content, 
+        rows: 15, 
+        style: "width: 100%; padding: 8px; border: 1px solid #ddd; box-sizing: border-box; font-size: 16px; line-height: 1.6;#{post.errors[:content].any? ? 'border-color: #ef5350;' : ''}", 
+        placeholder: "Write your post here..." %>
+    <% if post.errors[:content].any? %>
+      <p style="color: #ef5350; font-size: 14px; margin-top: 4px;"><%= post.errors[:content].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit style: "background-color: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 16px;" %>
+    <% if post.persisted? %>
+      <%= link_to "Cancel", post, style: "color: #666; margin-left: 16px;" %>
+    <% else %>
+      <%= link_to "Cancel", posts_path, style: "color: #666; margin-left: 16px;" %>
+    <% end %>
+  </div>
+<% end %>

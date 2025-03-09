@@ -1,0 +1,44 @@
+<div id="<%= dom_id post %>" class="w-full">
+  <% if action_name != "show" %>
+    <%# Index view showing a post card %>
+    <%= link_to post, class: "block group" do %>
+      <h2 class="text-2xl font-bold font-serif mb-2 group-hover:text-medium-green transition-colors">
+        <%= post.title %>
+      </h2>
+    <% end %>
+    <div class="text-medium-gray text-sm mb-3">
+      <%= time_ago_in_words(post.created_at) %> ago
+      <% if post.created_at != post.updated_at %>
+        · Updated <%= time_ago_in_words(post.updated_at) %> ago
+      <% end %>
+    </div>
+    <div class="font-serif text-base text-medium-gray leading-relaxed">
+      <%= truncate(post.content, length: 200, separator: ' ') %>
+    </div>
+    <div class="mt-4">
+      <%= link_to "Read more", post, class: "text-medium-green hover:underline font-medium" %>
+    </div>
+  <% else %>
+    <%# Show view for single post %>
+    <div class="mb-12">
+      <h1 class="text-4xl sm:text-5xl font-bold font-serif mb-6 leading-tight"><%= post.title %></h1>
+      <div class="flex items-center text-medium-gray mb-8">
+        <div class="w-10 h-10 rounded-full bg-medium-green text-white flex items-center justify-center mr-3">
+          <%= post.title[0].upcase %>
+        </div>
+        <div>
+          <div class="font-medium">Published in AI Blog</div>
+          <div class="text-sm">
+            <%= time_ago_in_words(post.created_at) %> ago
+            <% if post.created_at != post.updated_at %>
+              · Updated <%= time_ago_in_words(post.updated_at) %> ago
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="prose prose-lg max-w-none font-serif">
+      <%= simple_format post.content %>
+    </div>
+  <% end %>
+</div>
